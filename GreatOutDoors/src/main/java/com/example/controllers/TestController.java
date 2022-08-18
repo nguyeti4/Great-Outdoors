@@ -31,6 +31,7 @@ import com.example.payload.request.PlaceOrderRequest;
 import com.example.payload.request.EmailDetails;
 import com.example.payload.request.LoginRequest;
 import com.example.payload.request.SignupRequest;
+import com.example.payload.response.CartResponse;
 import com.example.payload.response.MessageResponse;
 import com.example.repositories.AddressRepository;
 import com.example.repositories.CartRepository;
@@ -179,6 +180,32 @@ public class TestController {
 		logger.info("You successfully removed the product from the cart");
 		return ResponseEntity.ok(new MessageResponse("Successfully removed product from cart!"));
 	}
+	
+	
+	@PostMapping("/changeQuantity/{cartId}/{quantity}")
+	public ResponseEntity<?> changeQuantity(@PathVariable int cartId, @PathVariable int quantity){
+		System.out.println("Cart: "+cartId);
+		Cart c = cartRepository.findByCartId(cartId);
+		System.out.println("Quantity: "+quantity);
+		c.setQuantity(quantity);
+		cartRepository.save(c);
+		logger.info("Successfully changed quantity of cartItem!");
+		return ResponseEntity.ok(new MessageResponse("Successfully changed quantity of cartItem!"));
+	}
+	/*
+	@GetMapping("/getCart/{userId}/{productId}")
+	public Cart getCart(@PathVariable int userId,@PathVariable int productId){
+		Product p = productRepository.findByProductId(productId);
+		System.out.println("P: "+p);
+		List<Cart> cartItems = cartRepository.findByUserId(userId);
+		for(Cart cartItem: cartItems) {
+			if(cartItem.getProduct().equals(p)) {
+				System.out.println("CartItem: "+cartItem);
+				return cartItem;
+			}
+		}
+		return null;
+	}*/
 	
 	/*
 	@GetMapping("/getCartItems/{userId}")

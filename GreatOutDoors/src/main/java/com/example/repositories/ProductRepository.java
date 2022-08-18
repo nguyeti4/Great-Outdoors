@@ -19,6 +19,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer>{
 	@Query(value="select p from Product p where p.id = ?1")
 	public Product findByProductId(int id);
 	
+	
 	//get list of all products under a category
 	public List<Product> findByCategory(String category);
 	
